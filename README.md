@@ -1,11 +1,13 @@
-# Shopware
+# Shopware6
 
 ## Installation
 
 ```bash
 
-cp ./src/env.example ./src/.env
+$ cp ./src/.env.example ./src/.env
 
-make setup
+$ docker-compose up -d
+
+$ make setup
 
 ```
