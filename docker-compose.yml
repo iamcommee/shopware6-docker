@@ -1,0 +1,35 @@
+version: "3.8"
+services:
+  shopware:
+    container_name: shopware
+    build:
+      context: .
+      args:
+        PHP_VERSION: ${PHP_VERSION}
+        SHOPWARE6_VERSION: ${SHOPWARE6_VERSION}
+        NODE_VERSION: ${NODE_VERSION}
+        COMPOSER_VERSION: ${COMPOSER_VERSION}
+    image: shopware:v${SHOPWARE6_VERSION}php-${PHP_VERSION}
+    restart: "no"
+    ports:
+      - 80:80
+      - 8888:8888
+      - 9998:9998
+      - 9999:9999
+    volumes:
+      - ./src/.env:/var/www/html/.env
+      - ./src/Makefile:/var/www/html/Makefile
+      - ./src/custom:/var/www/html/custom/
+
+  mysql:
+    image: mysql:5.7
+    platform: linux/x86_64
+    restart: "no"
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_USER: "user"
+      MYSQL_PASSWORD: "password"
+      MYSQL_ROOT_PASSWORD: "root_password"
+
+  # @todo : add db manger instance
