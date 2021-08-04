@@ -9,7 +9,6 @@ watch-storefront:
 
 # sometime, it might be error at feature command because there is difference command in each shopware version
 watch-admin:
-	docker exec -it shopware ./bin/console feature:dump && \
 	docker exec -it shopware bash -c "APP_URL=http://localhost \
 	PROJECT_ROOT=/var/www/html \
 	APP_ENV=dev \
