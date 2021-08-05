@@ -1,7 +1,6 @@
 version: "3.8"
 services:
   shopware:
-    container_name: shopware
     build:
       context: .
       args:
@@ -21,7 +20,7 @@ services:
       - ./src/Makefile:/var/www/html/Makefile
       - ./src/custom:/var/www/html/custom/
 
-  mysql:
+  db:
     image: mysql:5.7
     platform: linux/x86_64
     restart: "no"
@@ -32,4 +31,8 @@ services:
       MYSQL_PASSWORD: "password"
       MYSQL_ROOT_PASSWORD: "root_password"
 
-  # @todo : add db manger instance
+  adminer:
+    image: adminer
+    restart: "no"
+    ports:
+      - 8080:8080
