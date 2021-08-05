@@ -1,6 +1,6 @@
 # use cp to solve docker can not use sed -i for original file
 setup:
-	bin/console system:install --create-database --basic-setup && \
+	bin/console system:install --create-database --basic-setup --drop-database && \
 	bin/console system:generate-jwt-secret && \
 	chown www-data:www-data ./config/jwt/* && \
 	cp .env .env.tmp && \
