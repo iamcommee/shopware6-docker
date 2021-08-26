@@ -16,8 +16,8 @@ services:
       - 9998:9998
       - 9999:9999
     volumes:
+      # @todo : move .env to support in Dockerfile
       - ./src/.env:/var/www/html/.env
-      - ./src/Makefile:/var/www/html/Makefile
       - ./src/custom:/var/www/html/custom/
 
   db:

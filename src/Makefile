@@ -1,9 +1,17 @@
-# use cp to solve docker can not use sed -i for original file
+# |--------------------------------------------------------------------------
+# | Setup Shopware
+# |--------------------------------------------------------------------------
+# |
+# | Auto install Shopware (existing config will be removed when use this command)
+# |
 setup:
-	bin/console system:install --create-database --basic-setup --drop-database && \
+	bin/console system:install --create-database --basic-setup --drop-database --force && \
+	echo "Removing config/jwt..." && \
+	rm -rf ./config/jwt/* && \
 	bin/console system:generate-jwt-secret && \
-	chown www-data:www-data ./config/jwt/* && \
+	echo "Update .env" && \
 	cp .env .env.tmp && \
 	sed -i -r "s/^(APP_SECRET=).*/\1$$(bin/console system:generate-app-secret)/" .env.tmp && \
 	sed -i -r "s/^(INSTANCE_ID=).*/\1$$(openssl rand -hex 32)/" .env.tmp && \
-	cp .env.tmp .env
+	cp .env.tmp .env && rm -rf .env.tmp && \
+	echo "Done!"

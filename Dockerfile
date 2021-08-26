@@ -1,20 +1,48 @@
 ARG PHP_VERSION=7.4.21
 FROM php:${PHP_VERSION}-apache
 
+# |--------------------------------------------------------------------------
+# | User
+# |--------------------------------------------------------------------------
+# |
+# | Define a default user
+# | @todo 1 : Should we allow a default user as sudo ???
+# | @todo 2 : Should we allow a default user use sudo without password ???
+# |
 RUN echo 'root:password' | chpasswd
+RUN useradd -p $(openssl rand -hex 32) shopware
 
-# install nodejs
+# |--------------------------------------------------------------------------
+# | NodeJS
+# |--------------------------------------------------------------------------
+# |
+# | Installs NodeJS version 14 because it is suitable for shopware
+# | And create dir for default user to access NodeJS
+# |
 ARG NODE_VERSION=14
 RUN curl -fsSL https://deb.nodesource.com/setup_${NODE_VERSION}.x | bash
 RUN apt-get install -y nodejs
+RUN mkdir /home/shopware && \
+    chown shopware:shopware -R /home/shopware/
 
-# install composer
+# |--------------------------------------------------------------------------
+# | Composer
+# |--------------------------------------------------------------------------
+# |
+# | Installs Composer to manage PHP dependencies
+# |
 ARG COMPOSER_VERSION=2.1.3
 RUN curl -O https://getcomposer.org/download/${COMPOSER_VERSION}/composer.phar && \
     chmod 755 composer.phar && \
     mv composer.phar /usr/local/bin/composer
 
-# install required pkgs for shopware
+# |--------------------------------------------------------------------------
+# | Required pkgs for shopware
+# |--------------------------------------------------------------------------
+# |
+# | Installs pkgs from shopware system-requirements
+# | https://docs.shopware.com/en/shopware-6-en/first-steps/system-requirements
+# |
 RUN apt-get update && apt-get install -y \
     sudo \
     default-mysql-client \
@@ -37,24 +65,39 @@ RUN docker-php-ext-install gd \
     pdo_mysql \
     zip
 
-# custom php config
+# |--------------------------------------------------------------------------
+# | PHP config
+# |--------------------------------------------------------------------------
+# |
+# | Define a PHP config
+# |
 ARG PHP_MEMORY_LIMIT=1024M
 ENV PHP_MEMORY_LIMIT=$PHP_MEMORY_LIMIT
-
 ARG PHP_UPLOAD_MAX_FILESIZE=128M
 ENV PHP_UPLOAD_MAX_FILESIZE=$PHP_UPLOAD_MAX_FILESIZE
-
 COPY ./config/custom-php.ini /usr/local/etc/php/conf.d
-COPY ./config/shopware.conf /etc/apache2/sites-available
 
+# |--------------------------------------------------------------------------
+# | Apache config
+# |--------------------------------------------------------------------------
+# |
+# | Configure Apache2 Shopware Site
+# |
+COPY ./config/shopware.conf /etc/apache2/sites-available
 RUN a2enmod rewrite
 RUN a2ensite shopware.conf
 
-# install shopware6
+# |--------------------------------------------------------------------------
+# | Shopware
+# |--------------------------------------------------------------------------
+# |
+# | Installs Shopware
+# |
+USER shopware
+
 ARG SHOPWARE6_VERSION=master
 RUN git clone --branch ${SHOPWARE6_VERSION} https://github.com/shopware/production.git .
-RUN chown -R www-data:www-data /var/www/html/ && chmod -R 775 /var/www/html/
 RUN composer install
 
-# solution to fix permission issue in custom dir
-RUN usermod -u 1000 www-data
+COPY --chown=shopware:shopware ./src/.env.example ./.env
+COPY --chown=shopware:shopware ./src/Makefile .
