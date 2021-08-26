@@ -2,15 +2,35 @@
 
 ## Installation
 
-```bash
-
+```
 $ cp ./src/.env.example ./src/.env
 
 $ docker-compose up -d
 
 $ make setup
+```
+
+## Customization
+
+There is `.env` in root dir that you can use to build custom image
+
+Example
 
 ```
+PHP_VERSION=7.4.21
+SHOPWARE6_VERSION=master
+NODE_VERSION=14
+COMPOSER_VERSION=2.1.3
+```
+
+- PHP_VERSION : [Check the version and please use only php version for php apache tag](https://hub.docker.com/*/php)
+- SHOPWARE6_VERSION : [Check the version from branch](https://github.com/shopware/production)
+- NODE_VERSION : [nodejs](https://nodejs.org/en/about/releases/)
+- COMPOSER_VERSION : [composer](https://github.com/composer/composer/releases)
+
+or
+
+Modify `Dockerfile` and build it as your own image
 
 ## Commands
 
@@ -31,7 +51,6 @@ Note : you can exec to shopware service example `docker exec -it ... bash` to us
 ## TODO (Will update soon...)
 
 - Add `Dockerfile` to build `production` application
-- Check every functionality of shopware6 to make sure everything works fine...
 
 ## Issues
 
