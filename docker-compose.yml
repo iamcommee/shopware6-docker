@@ -8,7 +8,7 @@ services:
         SHOPWARE6_VERSION: ${SHOPWARE6_VERSION}
         NODE_VERSION: ${NODE_VERSION}
         COMPOSER_VERSION: ${COMPOSER_VERSION}
-    image: shopware:v${SHOPWARE6_VERSION}php-${PHP_VERSION}
+    image: shopware:v.${SHOPWARE6_VERSION}_php-${PHP_VERSION}
     restart: "no"
     ports:
       - 80:80
