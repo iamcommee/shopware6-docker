@@ -94,10 +94,3 @@ RUN a2ensite shopware.conf
 # | Installs Shopware
 # |
 USER shopware
-
-ARG SHOPWARE6_VERSION=master
-RUN git clone --branch ${SHOPWARE6_VERSION} https://github.com/shopware/production.git .
-RUN composer install
-
-COPY --chown=shopware:shopware ./src/.env.example ./.env
-COPY --chown=shopware:shopware ./src/Makefile .

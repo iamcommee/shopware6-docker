@@ -3,12 +3,12 @@
 ## Installation
 
 ```
-$ cp ./src/.env.example ./src/.env
-
-$ docker-compose up -d
 
 $ make setup
+
 ```
+
+Note : next time just run `docker-compose up -d`
 
 ## Customization
 

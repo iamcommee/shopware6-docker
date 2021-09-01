@@ -1,7 +1,15 @@
+include .env
+
 # |--------------------------------------------------------------------------
 # | Initial command to auto setup shopware
 # |--------------------------------------------------------------------------
 setup:
+	git clone --branch ${SHOPWARE6_VERSION} https://github.com/shopware/production.git ./src && \
+	cp ./files/.env.example ./src/.env && \
+	cp ./files/Makefile ./src/Makefile && \
+	docker-compose up -d && \
+	docker-compose exec --user root shopware bash -c "chown shopware:shopware vendor" && \
+	docker-compose exec shopware composer install && \
 	docker-compose exec shopware make setup
 
 # |--------------------------------------------------------------------------
