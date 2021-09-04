@@ -21,7 +21,9 @@ $ make setup
 ```
 
 Note1 : Next time just run `mutagen up -d`
+
 Note2 : To stop container run `mutagen compose stop` or clear everything `mutagen compose down -v`
+
 Note3 : Please use `mutagen compose` instead `docker-compose` commands
 
 ## Customization
