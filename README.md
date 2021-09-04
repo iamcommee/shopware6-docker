@@ -1,10 +1,11 @@
-<img align="right" width="175px" src="https://assets.shopware.com/media/logos/shopware_logo_blue.svg" />
-
 # Shopware6
+
+<img width="175px" src="https://assets.shopware.com/media/logos/shopware_logo_blue.svg" />
+
 
 This repo is created to solve performace issue on docker when mount large volume by full accessing all src with Mutagen.
 
-<img align="right" width="80px" src="https://mutagen.io/img/logo_light.svg" />
+<img align="right" width="100px" src="https://mutagen.io/img/logo_dark.svg" />
 
 ## Requirements
 
