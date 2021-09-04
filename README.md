@@ -6,6 +6,8 @@ This repo is created to solve performace issue on docker when mount large volume
 
 ## Requirements
 
+- [Docker](https://docs.docker.com/get-docker/)
+
 - [Mutagen](https://mutagen.io/documentation/introduction)
     - macOS (please use mutagen-beta) : [click](https://mutagen.io/documentation/introduction/installation#development-channels)
     - other platforms : [click](https://mutagen.io/documentation/introduction/installation)
