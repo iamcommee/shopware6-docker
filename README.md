@@ -1,11 +1,15 @@
+<img align="right" width="175px" src="https://assets.shopware.com/media/logos/shopware_logo_blue.svg" />
+
 # Shopware6
 
-This repo is created to solve performace issue on macOS with full accessing all src files from shopware.
+This repo is created to solve performace issue on docker when mount large volume by full accessing all src with Mutagen.
+
+<img align="right" width="80px" src="https://mutagen.io/img/logo_light.svg" />
 
 ## Requirements
 
 - [Mutagen](https://mutagen.io/documentation/introduction)
-    - macOs (please use mutagen-beta) : [click](https://mutagen.io/documentation/introduction/installation#development-channels)
+    - macOS (please use mutagen-beta) : [click](https://mutagen.io/documentation/introduction/installation#development-channels)
     - other platforms : [click](https://mutagen.io/documentation/introduction/installation)
 
 ## Installation
