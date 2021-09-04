@@ -4,7 +4,7 @@
 # |
 # | Auto install Shopware (existing config will be removed when use this command)
 # |
-setup:
+install:
 	bin/console system:install --create-database --basic-setup --drop-database --force && \
 	echo "Removing config/jwt..." && \
 	rm -rf ./config/jwt/* && \

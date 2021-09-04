@@ -1,16 +1,26 @@
 include .env
 
 # |--------------------------------------------------------------------------
+# | Check src dir to decide installing shopware
+# |--------------------------------------------------------------------------
+check:
+	if test -d src; \
+	then echo src already exists; \
+	else git clone --branch ${SHOPWARE6_VERSION} https://github.com/shopware/production.git ./src; \
+    fi
+
+# |--------------------------------------------------------------------------
 # | Initial command to auto setup shopware
 # |--------------------------------------------------------------------------
 setup:
-	git clone --branch ${SHOPWARE6_VERSION} https://github.com/shopware/production.git ./src && \
+	make check
 	cp ./files/.env.example ./src/.env && \
 	cp ./files/Makefile ./src/Makefile && \
-	docker-compose up -d && \
+	mutagen compose up -d && \
+	docker-compose exec --user root shopware bash -c "chown shopware:shopware /var/www/html" && \
 	docker-compose exec --user root shopware bash -c "chown shopware:shopware vendor" && \
-	docker-compose exec shopware composer install && \
-	docker-compose exec shopware make setup
+	docker-compose exec shopware composer install --no-scripts && \
+	docker-compose exec shopware make install
 
 # |--------------------------------------------------------------------------
 # | Build all buddle before use hot reload

@@ -1,4 +1,8 @@
 version: "3.8"
+
+volumes:
+  shopware_src:
+
 services:
   shopware:
     build:
@@ -16,12 +20,11 @@ services:
       - 9998:9998
       - 9999:9999
     volumes:
-      # @todo : move .env to support in Dockerfile
-      - ./src/:/var/www/html/
-      # exclude vender dir
+      - shopware_src:/var/www/html/
       - /var/www/html/vendor/
+
   db:
-    image: mysql:5.7
+    image: mariadb:10.3
     platform: linux/x86_64
     restart: "no"
     ports:
@@ -36,3 +39,23 @@ services:
     restart: "no"
     ports:
       - 8080:8080
+
+x-mutagen:
+  sync:
+    defaults:
+      ignore:
+        vcs: true
+
+    shopwareSrc:
+      alpha: "./src"
+      beta: "volume://shopware_src"
+      mode: "two-way-resolved"
+      ignore:
+        paths:
+          - "./src/vendor/"
+      configurationBeta:
+        permissions:
+            defaultOwner: "id:1000"
+            defaultGroup: "id:1000"
+            defaultFileMode: "0644"
+            defaultDirectoryMode: "0755"

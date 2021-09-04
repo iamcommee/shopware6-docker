@@ -9,8 +9,8 @@ FROM php:${PHP_VERSION}-apache
 # | @todo 1 : Should we allow a default user as sudo ???
 # | @todo 2 : Should we allow a default user use sudo without password ???
 # |
-RUN echo 'root:password' | chpasswd
-RUN useradd -p $(openssl rand -hex 32) shopware
+RUN echo 'root:password' | chpasswd && \
+    useradd -p $(openssl rand -hex 32) shopware
 
 # |--------------------------------------------------------------------------
 # | NodeJS
@@ -20,9 +20,9 @@ RUN useradd -p $(openssl rand -hex 32) shopware
 # | And create dir for default user to access NodeJS
 # |
 ARG NODE_VERSION=14
-RUN curl -fsSL https://deb.nodesource.com/setup_${NODE_VERSION}.x | bash
-RUN apt-get install -y nodejs
-RUN mkdir /home/shopware && \
+RUN curl -fsSL https://deb.nodesource.com/setup_${NODE_VERSION}.x | bash && \
+    apt-get install -y nodejs && \
+    mkdir /home/shopware && \
     chown shopware:shopware -R /home/shopware/
 
 # |--------------------------------------------------------------------------
@@ -59,8 +59,8 @@ RUN apt-get update && apt-get install -y \
     libzip-dev \ 
     xdg-utils
 
-RUN docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/
-RUN docker-php-ext-install gd \
+RUN docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/ && \
+    docker-php-ext-install gd \
     intl \
     pdo_mysql \
     zip
@@ -84,8 +84,8 @@ COPY ./config/custom-php.ini /usr/local/etc/php/conf.d
 # | Configure Apache2 Shopware Site
 # |
 COPY ./config/shopware.conf /etc/apache2/sites-available
-RUN a2enmod rewrite
-RUN a2ensite shopware.conf
+RUN a2enmod rewrite && \ 
+    a2ensite shopware.conf
 
 # |--------------------------------------------------------------------------
 # | Shopware

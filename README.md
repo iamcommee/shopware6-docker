@@ -1,6 +1,18 @@
 # Shopware6
 
+This repo is created to solve performace issue on macOS with full accessing all src files from shopware.
+
+## Requirements
+
+- [Mutagen](https://mutagen.io/documentation/introduction)
+    - macOs (please use mutagen-beta) : [click](https://mutagen.io/documentation/introduction/installation#development-channels)
+    - other platforms : [click](https://mutagen.io/documentation/introduction/installation)
+
 ## Installation
+
+Tip : If you already have production template, just create `src` dir then `paste` all files inside.
+
+### First time running
 
 ```
 
@@ -8,7 +20,9 @@ $ make setup
 
 ```
 
-Note : next time just run `docker-compose up -d`
+Note1 : Next time just run `mutagen up -d`
+Note2 : To stop container run `mutagen compose stop` or clear everything `mutagen compose down -v`
+Note3 : Please use `mutagen compose` instead `docker-compose` commands
 
 ## Customization
 
@@ -23,8 +37,8 @@ NODE_VERSION=14
 COMPOSER_VERSION=2.1.3
 ```
 
-- PHP_VERSION : [Check the version and please use only php version for php apache tag](https://hub.docker.com/*/php)
-- SHOPWARE6_VERSION : [Check the version from branch](https://github.com/shopware/production)
+- PHP_VERSION : [check the version and please use only php version for php apache tag](https://hub.docker.com/*/php)
+- SHOPWARE6_VERSION : [check the version from branch](https://github.com/shopware/production)
 - NODE_VERSION : [nodejs](https://nodejs.org/en/about/releases/)
 - COMPOSER_VERSION : [composer](https://github.com/composer/composer/releases)
 
