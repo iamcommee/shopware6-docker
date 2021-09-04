@@ -70,6 +70,8 @@ Note : you can exec to shopware service example `docker exec -it ... bash` to us
 
 ## TODO (Will update soon...)
 
+- Support Xdebug
+
 - Add `Dockerfile` to build `production` application
 
 ## Issues
